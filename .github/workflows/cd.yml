@@ -32,8 +32,5 @@ jobs:
             - name: Use gcloud CLI
               run: gcloud info
 
-            - name: Build Docker image
-              run: docker compose up --build
-
             - name: Push to Google Artifact Registry
               run: gcloud builds submit --tag us-central1-docker.pkg.dev/bright-drake-47800-v2/notely-ar-repo/notely:latest .
