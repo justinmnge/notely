@@ -32,5 +32,8 @@ jobs:
             - name: Use gcloud CLI
               run: gcloud info
 
+            - name: Ensure project is set before submit
+              run: gcloud config set project bright-drake-47800-v2
+
             - name: Push to Google Artifact Registry
               run: gcloud builds submit --tag us-central1-docker.pkg.dev/bright-drake-47800-v2/notely-ar-repo/notely:latest .
