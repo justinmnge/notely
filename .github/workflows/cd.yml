@@ -18,5 +18,22 @@ jobs:
               with:
                 go-version: "1.25.1"
 
-            - name: run 
+            - name: Execute scripts/buildprod.sh 
               run: ./scripts/buildprod.sh
+
+            - id: auth
+              uses: google-github-actions/auth@v2
+              with:
+                credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+            
+            - name: Set up Cloud SDK
+              uses: google-github-actions/setup-gcloud@v3
+
+            - name: Use gcloud CLI
+              run: gcloud info
+
+            - name: Build Docker image
+              run: docker compose up --build
+
+            - name: Push to Google Artifact Registry
+              run: gcloud builds submit --tag us-central1-docker.pkg.dev/bright-drake-47800-v2/notely-ar-repo/notely:latest .
